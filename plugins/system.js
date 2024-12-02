@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['noprerix'],
+   usage: ['noprefix'],
    async: async (m, {
       client,
       args,
