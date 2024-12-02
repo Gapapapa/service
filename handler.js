@@ -62,7 +62,7 @@ module.exports = async (client, ctx) => {
          hit: 0,
          spam: 0
       })
-      if (!setting.multiprefix) setting.noprefix = true
+      if (!setting.multiprefix) setting.noprefix = false
       if (setting.debug && !m.fromMe && isOwner) client.reply(m.chat, Func.jsonFormat(m), m)
       if (m.isGroup && !groupSet.stay && (new Date * 1) >= groupSet.expired && groupSet.expired != 0) {
          return client.reply(m.chat, Func.texted('italic', '🚩 Bot time has expired and will leave from this group, thank you.', null, {
