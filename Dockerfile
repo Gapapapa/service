@@ -1,27 +1,29 @@
-FROM node:14.21.3 AS node_base
+# Gunakan image dasar yang sesuai dengan lingkungan yang diinginkan (misalnya, Node.js)
+FROM node:18-buster
 
-ENV NODE_VERSION=14.21.3
-RUN apt install -y curl
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+# Instal dependensi sistem yang diperlukan
+RUN apt-get update && apt-get install -y \
+    uuid-dev \
+    libcairo2 \
+    libpango1.0-dev \
+    libjpeg-dev \
+    giflib-tools \
+    librsvg2-dev \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+# Tentukan direktori kerja untuk aplikasi
+WORKDIR /app
 
-COPY package.json .
+# Salin package.json dan install dependensi
+COPY package.json ./
+RUN npm install
 
-RUN yarn global add node-pre-gyp@v0.7.x && yarn global add node-pre && yarn install
-
+# Salin sisa aplikasi ke dalam kontainer
 COPY . .
 
-EXPOSE 5000
+# Ekspos port yang akan digunakan oleh aplikasi (opsional, jika diperlukan)
+EXPOSE 3000
 
+# Tentukan perintah untuk menjalankan aplikasi menggunakan PM2
 CMD ["node", "index.js"]
