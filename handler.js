@@ -37,20 +37,6 @@ module.exports = async (client, ctx) => {
 
       // exception disabled plugin
       var plugins = Object.fromEntries(Object.entries(plugins).filter(([name, _]) => !setting.pluginDisable.includes(name)))
-
-      // stories reaction
-      client.storyJid = client.storyJid ? client.storyJid : []
-      if (m.chat.endsWith('broadcast') && !client.storyJid.includes(m.sender) && m.sender != client.decodeJid(client.user.id)) client.storyJid.push(m.sender)
-      if (m.chat.endsWith('broadcast') && [...new Set(client.storyJid)].includes(m.sender) && !/protocol/.test(m.mtype)) {
-         await client.sendMessage('status@broadcast', {
-            react: {
-               text: '☹️',
-               key: m.key
-            }
-         }, {
-            statusJidList: [m.sender]
-         })
-      }
       
       if (m.isGroup && !isBotAdmin) {
          groupSet.localonly = false
@@ -233,4 +219,5 @@ module.exports = async (client, ctx) => {
       if (!m.fromMe) return m.reply(Func.jsonFormat(new Error('neoxr-bot encountered an error :' + e)))
    }
    Func.reload(require.resolve(__filename))
-}
+            }
+                    
