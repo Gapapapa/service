@@ -16,7 +16,7 @@ exports.run = {
          let cur = user.time + 12 * 60 * 60 * 1000 // 12 jam         
          if (m.text && (!user.time || user.time === 0 || cur - new Date() <= 0)) {
             user.time = new Date().getTime()
-            client.sendFromAI(m.chat, message, null)
+            client.sendFromAI(m.chat, message, m)
          }
       } catch (e) {
          return client.reply(m.chat, Func.jsonFormat(e), m)
