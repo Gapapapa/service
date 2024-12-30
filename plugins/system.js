@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['self', 'online'],
+   usage: ['self', 'noprefix', 'online'],
    async: async (m, {
       client,
       args,
