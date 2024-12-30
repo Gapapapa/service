@@ -9,9 +9,7 @@ exports.run = {
             year: 'numeric'
          })
          let time = d.toLocaleTimeString('id')
-         const message = `hai ${m.pushName}! lagi off dulu nih, whatsapp gua lagi hibernasi sementara. jangan khawatir, gua bakal balas chat lu secepat mungkin pas gua udah online lagi.
-
-> ~ Asisten`
+         const message = `hai ${m.pushName}! gua lagi off dulu nih, yang bales chat ini adalah AI. jangan khawatir, gua bakal balas chat lu secepat mungkin pas gua udah online lagi.`
          let user = global.db.users.find(v => v.jid == m.sender)
          if (!user) return         
          user.time = user.time || 0
